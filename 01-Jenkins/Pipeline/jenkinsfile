@@ -1,7 +1,7 @@
 node
 {
   stage('Git-Checkout') {
-   git 'https://github.com/Hyndavi09/DevOpsPetclinic.git'
+   git 'https://github.com/Hyndavi09/Production.git'
   }
      stage('Input for deploy in production server') {            
    input('Do you want to deploy into production server proceed?')
