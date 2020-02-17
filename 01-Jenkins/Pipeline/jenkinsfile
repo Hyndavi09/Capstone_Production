@@ -9,10 +9,6 @@ node
  def project_path="01-Jenkins/Code/petclinic"
  
  dir(project_path) {
-
-	 stage('create artifact folder to store artifact'){
-	 sh label: 'Jenkins', script: "mkdir artifacts"
-	 }
 	 
     stage('Jfrog Artifactory download'){
     def server= Artifactory.server 'Artifactory'
