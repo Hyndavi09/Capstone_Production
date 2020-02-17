@@ -9,9 +9,25 @@ node
  def project_path="01-Jenkins/Code/petclinic"
  
  dir(project_path) {
-   stage('Archive-Artifacts') {
-   archiveArtifacts 'target/*.war'
-  }
+
+	 stage('create artifact folder to store artifact'){
+	 sh label: 'Jenkins', script: "mkdir artifacts"
+	 }
+	 
+    stage('Jfrog Artifactory download'){
+    def server= Artifactory.server 'Artifactory'
+    def downloadSpec = """{
+    "files": [
+    {
+      "pattern": "devops/*.war",
+      "target": "artifact/"
+      
+    }
+    ]
+    }"""
+    server.download(downloadSpec)
+   
+}
   stage('Geting Ready For Ansible') {
   sh label: 'Jenkins', script: "echo '<h1> TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>' > ../../../04-Terraform/03-Ansible-Deploy/ansible/04-Tomcat/templates/apps/index.html"
 }  
