@@ -4,9 +4,13 @@ node
    git 'https://github.com/Hyndavi09/Production.git'
   }
    
- def project_path="01-Jenkins/Code/petclinic"
+ def project_path="01-Jenkins/Pipeline"
  
  dir(project_path) {
+  stage('create artifact folder to store artifact'){
+    sh label: '',script: "rm -rf petclinicwarfile"
+    sh label: '', script: "mkdir petclinicwarfile"
+    }
 	 
     stage('Jfrog Artifactory download'){
     def server= Artifactory.server 'artifact'
@@ -14,9 +18,7 @@ node
     "files": [
     {
       "pattern": "petclinic/*.war",
-      "target": "/home/mtadminnuvepro/artifacts/"
-      
-      
+      "target": "/root/.jenkins/workspace/Production/01-Jenkins/Pipeline/petclinicwarfile/"  
     }
     ]
     }"""
@@ -24,16 +26,17 @@ node
    
 }
   stage('Geting Ready For Ansible') {
-  sh label: 'Jenkins', script: "echo '<h1> TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>' > ../../../04-Terraform/03-Ansible-Deploy/ansible/04-Tomcat/templates/apps/index.html"
+  sh label: 'Jenkins', script: "echo '<h1> TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>' > /root/.jenkins/workspace/Production/01-Jenkins/Pipeline/index.html"
 }  
-   
- }
+   def project_terra="Production/03-Ansible/03-Playbook/" 
+dir(project_terra) { 
+stage('Prod Deployment on AWS'){
+sh label: 'terraform', script: 'ansible-playbook -i /root/.jenkins/workspace/Infrastructure/04-Terraform/03-Ansible-Deploy/jenkins-ci.ini -u ubuntu --key /root/.ssh/hyndavi.pem /root/.jenkins/workspace/Production/03-Ansible/03-Playbook/web-playbook.yaml'
 
-def project_terra="04-Terraform/03-Ansible-Deploy"
-dir(project_terra) {
-   stage('Prod Deployment on AWS'){
-   sh label: 'terraform', script: '/bin/terraform  init'
-   sh label: 'terraform', script: '/bin/terraform  apply -input=false -auto-approve'
-   }
+ 
 }
+
+ 
+}
+ }
 }
