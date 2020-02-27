@@ -28,6 +28,7 @@ node
   stage('Geting Ready For Ansible') {
   sh label: 'Jenkins', script: "echo '<h1> TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>' > /root/.jenkins/workspace/Capstone_Production/01-Jenkins/Pipeline/index.html"
 }  
+}
    def project_terra="03-Ansible/03-Playbook/" 
 dir(project_terra) { 
 stage('Prod Deployment on AWS'){
@@ -39,4 +40,4 @@ sh label: 'terraform', script: 'ansible-playbook -i /root/.jenkins/workspace/Cap
  
 }
  }
-}
+
