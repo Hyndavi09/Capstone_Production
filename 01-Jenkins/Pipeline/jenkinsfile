@@ -18,7 +18,7 @@ node
     "files": [
     {
       "pattern": "petclinic/*.war",
-      "target": "/root/.jenkins/workspace/Production/01-Jenkins/Pipeline/petclinicwarfile/"  
+      "target": "/root/.jenkins/workspace/Capstone_Production/01-Jenkins/Pipeline/"  
     }
     ]
     }"""
@@ -26,7 +26,7 @@ node
    
 }
   stage('Geting Ready For Ansible') {
-  sh label: 'Jenkins', script: "echo '<h1> TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>' > /root/.jenkins/workspace/Capstone_Infrastructure/01-Jenkins/Pipeline/index.html"
+  sh label: 'Jenkins', script: "echo '<h1> TASK BUILD ID: ${env.BUILD_DISPLAY_NAME}</h1>' > /root/.jenkins/workspace/Capstone_Production/01-Jenkins/Pipeline/index.html"
 }  
    def project_terra="03-Ansible/03-Playbook/" 
 dir(project_terra) { 
