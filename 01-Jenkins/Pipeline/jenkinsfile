@@ -31,7 +31,7 @@ node
    def project_terra="Production/03-Ansible/03-Playbook/" 
 dir(project_terra) { 
 stage('Prod Deployment on AWS'){
-sh label: 'terraform', script: 'ansible-playbook -i /root/.jenkins/workspace/Infrastructure/04-Terraform/03-Ansible-Deploy/jenkins-ci.ini -u ubuntu --key /root/.ssh/hyndavi.pem /root/.jenkins/workspace/ProductionServer/03-Ansible/03-Playbook/web-playbook.yaml'
+sh label: 'terraform', script: 'ansible-playbook -i /root/.jenkins/workspace/Capstone_Infrastructure/Terraform/jenkins-ci.ini -u ubuntu --key /root/.ssh/hyndavi.pem /root/.jenkins/workspace/ProductionServer/03-Ansible/03-Playbook/web-playbook.yaml'
 
  
 }
